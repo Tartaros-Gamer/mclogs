@@ -2,10 +2,10 @@
 $id = new Id(substr($_SERVER['REQUEST_URI'], 1));
 $log = new Log($id);
 
-$title = "mclo.gs - Paste, share & analyse your Minecraft server logs";
-$description = "Easily paste your Minecraft server logs to share and analyse them.";
+$title = "TLogs - 上传, 分享 & 分析您的 Minecraft 服务器日志";
+$description = "轻松粘贴您的Minecraft服务器日志，以共享和分析它们。";
 if (!$log->exists()) {
-    $title = "Log not found - mclo.gs";
+    $title = "日志未找到 - TLogs";
     http_response_code(404);
 } else {
     $analysis = $log->getAnalysis();
@@ -17,12 +17,12 @@ if (!$log->exists()) {
     } else {
         $software = "Unknown";
     }
-    $title = $software . " server log [#" . $id->get() . "] - mclo.gs";
+    $title = $software . " 服务器日志 [#" . $id->get() . "] - TLogs";
     $lineNumbers = $log->getLineNumbers();
-    $lineString = $lineNumbers === 1 ? "line" : "lines";
+    $lineString = $lineNumbers === 1 ? "行" : "行";
 
     $errorCount = $log->getErrorCount();
-    $errorString = $errorCount === 1 ? "error" : "errors";
+    $errorString = $errorCount === 1 ? "个错误" : "多个错误";
 
     $description = $lineNumbers . " " . $lineString;
     if ($errorCount > 0) {
@@ -30,32 +30,32 @@ if (!$log->exists()) {
     }
 
     if (count($problems) > 0) {
-        $problemString = "problems";
+        $problemString = "多个问题";
         if (count($problems) === 1) {
-            $problemString = "problem";
+            $problemString = "个问题";
         }
-        $description .= " | " . count($problems) . " " . $problemString . " automatically detected";
+        $description .= " | " . count($problems) . " " . $problemString . " 自动检测已完成";
     }
 }
 ?><!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
-        <meta http-equiv="content-language" content="en" />
+        <meta http-equiv="content-language" content="zh-CN" />
         <meta name="theme-color" content="#2d3943" />
 
-        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Play:400,700">
-        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet" />
+        <link rel="stylesheet" href="//fonts.font.im/css?family=Play:400,700">
+        <link href="https://fonts.font.im/css?family=Roboto+Mono:300,400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet" />
 
         <title><?=$title; ?></title>
 
         <base href="/frontend/" />
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.2.0/css/fontawesome.min.css" />
         <link rel="stylesheet" href="css/btn.css" />
         <link rel="stylesheet" href="css/mclogs.css?v=130220" />
         <link rel="stylesheet" href="css/log.css?v=180219" />
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
         <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
 
@@ -79,10 +79,10 @@ if (!$log->exists()) {
                 </a>
                 <div class="menu">
                     <a class="menu-item" href="/#info">
-                        <i class="fa fa-info-circle"></i> Info
+                        <i class="fa fa-info-circle"></i> 概览
                     </a>
                     <a class="menu-item" href="/#plugin">
-                        <i class="fa fa-database"></i> Plugin
+                        <i class="fa fa-database"></i> 插件
                     </a>
                     <a class="menu-item" href="/#mod">
                         <i class="fa fa-puzzle-piece"></i> Mod
@@ -191,8 +191,8 @@ if (!$log->exists()) {
                 </div>
                 <?php else: ?>
                 <div class="not-found">
-                    <div class="not-found-title">404 - Log not found.</div>
-                    <div class="not-found-text">The log you try to open does not exist (anymore).<br />We automatically delete all logs that weren't opened in the last 7 days.</div>
+                    <div class="not-found-title">404 - 日志未被找到。</div>
+                    <div class="not-found-text">您尝试打开的的日志不再存在。<br />我们会自动删除过去7天内没有被打开过的所有日志。</div>
                     <div class="not-found-buttons">
                         <a href="/" class="btn btn-no-margin btn-blue btn-small">
                             <i class="fa fa-home"></i> Paste a new log
@@ -205,14 +205,14 @@ if (!$log->exists()) {
         <?php if($log->exists()): ?>
         <div class="row row-notice dark">
             <div class="row-inner">
-                This log will be saved for 7 days from their last view.<br />
-                <a href="mailto:abuse@aternos.org?subject=Report%20mclo.gs/<?=$id->get(); ?>">Report abuse</a>
+                此日志将从其最后被查看的时间开始保存7天。<br />
+                <a href="mailto:abuse@aternos.org?subject=Report%20mclo.gs/<?=$id->get(); ?>">举报滥用</a>
             </div>
         </div>
         <?php endif; ?>
         <div class="row footer">
             <div class="row-inner">
-                &copy; 2017-<?=date("Y"); ?> by mclo.gs - a service by <a href="https://aternos.org">Aternos</a> | <a href="https://aternos.org/impressum/">Imprint</a>
+                &copy; 2017-<?=date("Y"); ?>  Hosted by <a href="https://www.tcloudmc.cn">TCloudMC</a> - Powered by <a href="https://aternos.org">Aternos</a> | <a href="https://aternos.org/impressum/">Imprint</a>
             </div>
         </div>
         <script src="js/logview.js?v=130220"></script>
